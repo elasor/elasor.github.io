@@ -48,8 +48,8 @@ body{
 	border: 1px solid #666;
 }
 
-.content>ul>li:hover{
-	box-shadow: 0px 0px 3px 2px #99aaaaaa;
+.content>ul>li{
+	box-shadow: 0px 0px 2px 2px #99aaaaaa;
 }
 
 
