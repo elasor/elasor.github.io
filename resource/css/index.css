@@ -6,7 +6,7 @@ html,head,body{
 }
 
 body{
-	background: url(../img/bg2.jpg) no-repeat;
+	background: #9FD8EC;
 	background-size: cover;
 }
 
@@ -22,4 +22,12 @@ body{
 	height: 56px;
 	float: left;
 	margin: 4px 4px;
+}
+
+.header>span{
+	float: left;
+	margin: 4px 0px;
+	font:32px/56px "microsoft yahei";
+	color: white;
+	text-align: center;
 }
