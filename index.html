@@ -5,7 +5,7 @@
 <title>Elasor</title>
 <link rel="shortcut icon" href="./resource/img/favicon.ico" />
 <link rel="stylesheet" type="text/css" href="./resource/css/index.css" />
-<script type="text/javascript" src="./resource/css/index.css"></script>
+<script type="text/javascript" src="./resource/js/index.js"></script>
 </head>
 <body>
 	<div class="header">
@@ -14,7 +14,15 @@
 
 	<div class="content">
 		<ul>
-			<li onclick="location='./article/a.html'"></li>
+			<li onclick="location='./article/a.html'">
+				<span class="content_title">RecyclerView中的CheckBox与EditText</span>
+				<hr color="#666"/>
+				<div class="content_content">
+						注：<br/>
+						1.这里只记录了RecyclerView中全为CheckBox或者全为EditText的情况，当列表控件为ListView时，基本思想一样<br/>
+						2.当RecyclerView中全为EditText并且设备存在物理键盘时，滚动后输入文本会记录在复用后position的相应实体类中
+				</div>
+			</li>
 			<li></li>
 			<li></li>
 			<li></li>

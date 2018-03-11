@@ -40,32 +40,30 @@ hr{
 }
 
 .content{
-	padding: 0px 25px 25px 25px;
-}
-
-.content>ul>li{
-	width: 100%;
-	height: 176px;
-	background: #fff;
-	margin-top: 25px;
-	border-radius: 5px;
-	border: 1px solid #666;
-}
-
-.content>ul>li:hover{
-	box-shadow: 0px 0px 2px 2px #99aaaaaa;
+	margin: 25px;
+	background: white;
+	background-size: cover;
+	padding: 16px;
+	font: 16px/32px "microsoft yahei";
 }
 
 .content_title{
-	font: 20px/48px "microsoft yahei";
-	margin-left: 12px;
+	text-align: center;
+	font: 32px/56px "microsoft yahei";
 }
 
-.content_content{
-	font: 16px/32px "microsoft yahei";
-	text-align: left;
+.content_code{
 	padding: 16px;
+	border: 1px solid #666;
+	font: 16px/24px "microsoft yahei";
 }
+
+
+
+
+
+
+
 
 
 

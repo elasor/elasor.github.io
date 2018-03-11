@@ -1,10 +1,229 @@
 <!DOCTYPE html>
 <html>
-	<head>
-		<meta charset="UTF-8">
-		<title>Article A</title>
-	</head>
-	<body>
-		Article A
-	</body>
+<head>
+<meta charset="UTF-8">
+<title>RecyclerView中的CheckBox与EditText</title>
+<link rel="shortcut icon" href="../resource/img/favicon.ico" />
+<link rel="stylesheet" type="text/css"
+	href="../resource/css/article.css" />
+<script type="text/javascript" src="../resource/js/article.js"></script>
+</head>
+<body>
+	<div class="header">
+		<img title="Elasor" src="../resource/img/header2.jpg"> <span>Elasor</span>
+	</div>
+
+	<div class="content">
+
+		<div class="content_title">RecyclerView中的CheckBox与EditText</div>
+
+		<br /> 注： <br />
+		1.这里只记录了RecyclerView中全为CheckBox或者全为EditText的情况，当列表控件为ListView时，基本思想一样
+		<br />
+		2.当RecyclerView中全为EditText并且设备存在物理键盘时，滚动后输入文本会记录在复用后position的相应实体类中 <br />
+		<br /> Bean： <br /> <br />
+		<div class="content_code">
+			<pre>
+public class A0Bean {
+	//类型1：列表中存在CheckBox
+	public static final int ITEM_TYPE_CHECKBOX = 0;
+	//类型2：列表中存在EditText
+	public static final int ITEM_TYPE_EDITTEXT = 1;
+
+	//标题，可有可无，只是为了方便观察
+	private String name;
+	
+	//EditText中的内容
+	private String content;
+	//CheckBox是否选中
+	private boolean focused;
+	
+	//RecyclerView中getItemViewType()使用;
+	private int itemType;
+
+	public A0Bean(String name, String content, int itemType) {
+		this(name, content, itemType, false);
+	}
+				
+	public A0Bean(String name, String content, int itemType, boolean focused) {
+		this.name = name;
+		this.content = content;
+		this.itemType = itemType;
+		this.focused = focused;
+	}
+	
+	//省略set与get方法..
+}
+</pre>
+		</div>
+		<br /> Adapter： <br /> <br />
+		<div class="content_code">
+			<pre>
+public class A0Adapter extends RecyclerView.Adapter<A0Adapter.Holder> {
+	private Context mContext;
+	private List<A0Bean> mList;
+
+	//EditText类型下判断是否获得焦点
+	private int mCurrentFocusPosition = 0;
+			
+	public A0Adapter(Context mContext, List<A0Bean> mList) {
+		this.mContext = mContext;
+		this.mList = mList;
+	}
+			
+	@Override
+	public int getItemCount() {
+		return null == mList ? 0 : mList.size();
+	}
+	
+	@Override
+	public int getItemViewType(int position) {
+		return mList.get(position).getItemType();
+	}
+			
+	@Override
+	public Holder onCreateViewHolder(ViewGroup parent, int viewType) {
+		switch (viewType) {
+			case A0Bean.ITEM_TYPE_CHECKBOX:
+				View view1 = LayoutInflater.from(mContext).inflate(R.layout.item_a0_content_checkbox, parent, false);
+				return new CheckHolder(view1);
+			case A0Bean.ITEM_TYPE_EDITTEXT:
+				View view2 = LayoutInflater.from(mContext).inflate(R.layout.item_a0_content_edittext, parent, false);
+				return new EditHolder(view2);
+			default:
+				return null;
+		}
+	}
+			
+	@Override
+	public void onBindViewHolder(Holder holder, int position) {
+		if (holder instanceof CheckHolder) {
+			onCheckHolder((CheckHolder) holder, position);
+		} else if (holder instanceof EditHolder) {
+			onEditHolder((EditHolder) holder, position);
+		}
+	}
+			
+	private void onEditHolder(final EditHolder editHolder, final int position) {
+		final A0Bean a0Bean = mList.get(position);
+			
+		String name = a0Bean.getName();
+		String content = a0Bean.getContent();
+			
+		//复用时获取TAG，移除Item中EditText的TextWatcher，非常重要
+		Object tag = editHolder.etItemContent.getTag();
+		if (null != tag && tag instanceof TextWatcher) {
+			editHolder.etItemContent.removeTextChangedListener((TextWatcher)tag);
+		}
+			
+		editHolder.tvItemTitle.setText(name);
+		editHolder.etItemContent.setText(content);
+			
+		//当position与之前获得焦点的position相同时获得焦点并将光标移至文本末尾
+		if (mCurrentFocusPosition == position) {
+			editHolder.etItemContent.requestFocus();
+			editHolder.etItemContent.setSelection(editHolder.etItemContent.getText().length());
+		}
+			
+		//当EditText中的文本变化时保存下来
+		TextWatcher watcher = new TextWatcher() {
+			@Override
+			public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+			
+			}
+			
+			@Override
+			public void onTextChanged(CharSequence s, int start, int before, int count) {
+			
+			}
+			
+			@Override
+			public void afterTextChanged(Editable s) {
+				a0Bean.setContent(s.toString());
+				mCurrentFocusPosition = position;
+				notifyDataSetChanged();
+			}
+		};
+		editHolder.etItemContent.addTextChangedListener(watcher);
+			
+		//复用时移除
+		editHolder.etItemContent.setTag(watcher);
+			
+		//当EditText中文本太长导致EditText与RecyclerView滚动冲突，此为解决方法
+		editHolder.etItemContent.setOnTouchListener(new View.OnTouchListener() {
+			@Override
+			public boolean onTouch(View v, MotionEvent event) {
+				if ((v.getId() == R.id.et_item_content && canVerticalScroll(editHolder.etItemContent))) {
+					v.getParent().requestDisallowInterceptTouchEvent(true);
+					if (event.getAction() == MotionEvent.ACTION_UP) {
+						v.getParent().requestDisallowInterceptTouchEvent(false);
+					}
+				}
+				return false;
+			}
+		});
+	}
+			
+	private void onCheckHolder(CheckHolder checkHolder, int position) {
+		final A0Bean a0Bean = mList.get(position);
+			
+		String name = a0Bean.getName();
+		boolean focused = a0Bean.isFocused();
+			
+		checkHolder.tvItemTitle.setText(name);
+		checkHolder.cbItemSelect.setChecked(focused);
+			
+		//注意：这是setOnClickListener
+		checkHolder.cbItemSelect.setOnClickListener(new View.OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				a0Bean.setFocused(!a0Bean.isFocused());
+				notifyDataSetChanged();
+			}
+		});
+	}
+			
+	/**
+	* EditText竖直方向是否可以滚动
+	* @param editText 需要判断的EditText
+	* @return true：可以滚动 false：不可以滚动
+	*/
+	private boolean canVerticalScroll(EditText editText) {
+		//滚动的距离
+		int scrollY = editText.getScrollY();
+		//控件内容的总高度
+		int scrollRange = editText.getLayout().getHeight();
+		//控件实际显示的高度
+		int scrollExtent = editText.getHeight() - editText.getCompoundPaddingTop() -editText.getCompoundPaddingBottom();
+		//控件内容总高度与实际显示高度的差值
+		int scrollDifference = scrollRange - scrollExtent;
+			
+		if(scrollDifference == 0) {
+			return false;
+		}
+			
+		return (scrollY > 0) || (scrollY < scrollDifference - 1);
+	}
+			
+	//省略Holder..
+}
+
+			</pre>
+		</div>
+		<br /> 最后有一点，RecyclerView向下滚动后，若软键盘未关闭，也会出现开头说的第二点描述的情况，
+		所以为RecyclerView设置了滚动时关闭软键盘，不过可能不太严谨，应该先判断软键盘的状态 <br /> <br />
+		<div class="content_code">
+			<pre>
+rvA0Content.setOnScrollListener(new RecyclerView.OnScrollListener() { 
+	@Override 
+	public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
+		super.onScrollStateChanged(recyclerView, newState);
+		InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+		imm.hideSoftInputFromWindow(getWindow().peekDecorView().getWindowToken(), 0); 
+	} 
+});
+</pre>
+		</div>
+	</div>
+</body>
 </html>
