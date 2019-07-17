@@ -2,31 +2,35 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Elasor</title>
-<link rel="shortcut icon" href="./resource/img/favicon.ico" />
-<link rel="stylesheet" type="text/css" href="./resource/css/index.css" />
-<script type="text/javascript" src="./resource/js/index.js"></script>
+<title>Elasor丶</title>
+<link rel="stylesheet" type="text/css" href="../resource/css/base.css">
+<link rel="stylesheet" type="text/css"
+	href="../resource/css/new/index.css">
+<script type="text/javascript" src="../resource/js/new/base.js"></script>
+<script type="text/javascript" src="../resource/js/new/index.js"></script>
 </head>
 <body>
-	<div class="header">
-		<img title="Elasor" src="./resource/img/header2.jpg"> <span>Elasor</span>
+
+	<div class="html_header">
+		<a class="html_header_title unselectable" title="首页-Elasor丶" href=".">Elasor丶</a>
+		<div class="html_header_search">
+			<input id="html_header_search_input" class="html_header_search_input" type="text">
+			<div class="html_header_search_search unselectable">
+				<img id="html_header_search_click"
+				title="搜索"
+					src="../resource/img/search_black.png"
+					onclick="search()">
+			</div>
+		</div>
 	</div>
 
-	<div class="content">
-		<ul>
-			<li onclick="location='./article/a.html'">
-				<span class="content_title">RecyclerView中的CheckBox与EditText</span>
-				<hr color="#666"/>
-				<div class="content_content">
-						注：<br/>
-						1.这里只记录了RecyclerView中全为CheckBox或者全为EditText的情况，当列表控件为ListView时，基本思想一样<br/>
-						2.当RecyclerView中全为EditText并且设备存在物理键盘时，滚动后输入文本会记录在复用后position的相应实体类中
-				</div>
-			</li>
-			<li></li>
-			<li></li>
-			<li></li>
+	<div class="html_content">
+
+		<ul id="content_list">
+			
 		</ul>
+
 	</div>
+
 </body>
 </html>

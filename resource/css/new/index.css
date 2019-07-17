@@ -1,0 +1,131 @@
+@charset "UTF-8";
+
+.html_content{
+	margin-top: 20px;
+}
+
+#content_list{
+}
+
+.list_item{
+	width: 48.5%;
+	height: 420px;
+	background: #333333;
+}
+
+.left{
+	float: left;
+	margin: 0px 0.5% 20px 1%;
+}
+
+.right{
+	float: right;
+	margin: 0px 1% 20px 0.5%;
+}
+
+.list_item_tag{
+	position: absolute;
+	margin: 24px 32px 0px 32px;
+	background: yellow;
+	font: 14px "Microsoft YaHei";
+	font-weight: bold;
+	padding: 6px 10px;
+	cursor: pointer;
+}
+
+.list_item_title{
+	display: block;
+	max-width: 40%;
+	position: absolute;
+	margin: 120px 32px 0px 32px;
+	color: white;
+	font: 24px "Microsoft YaHei";
+	font-weight: bold;
+	text-wrap: normal;
+	word-wrap: break-word;
+	cursor: pointer;
+	text-decoration: none;
+}
+
+.list_item_title:hover{
+	border-color: yellow;
+	text-decoration: underline;
+}
+
+.list_item_time{
+	position: absolute;
+	margin: 200px 32px 0px 32px;
+	color: #F1F1F1;
+	font: 18px "Microsoft YaHei";
+	font-weight: bold;
+}
+
+.list_item_read{
+	position: absolute;
+	margin: 300px 32px 0px 32px;
+	color: #F1F1F1;
+	font: 18px "Microsoft YaHei";
+	font-weight: bold;
+	padding:8px 16px;
+	border: 2px solid white;
+	text-decoration: none;
+}
+
+.list_item_read:hover{
+	color: black;
+	background: yellow;
+	border: 2px solid yellow;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

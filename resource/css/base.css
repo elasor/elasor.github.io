@@ -1,0 +1,78 @@
+@charset "UTF-8";
+
+* {
+	padding: 0px;
+	margin: 0px;
+	list-style: none;
+}
+
+.unselectable{
+    -webkit-user-select:none;
+	-moz-user-select:none;
+	-ms-user-select:none;
+	user-select:none;
+}
+
+.html_header {
+	position: absolute;
+	width: 100%;
+	min-width: 720px;
+	height: 96px;
+	background: #0f285e;
+}
+
+.html_content{
+	position: absolute !important;
+	position: relative;
+	width: 100%;
+	top: 96px;
+	bottom: 0px;
+	height: auto !important;
+	height: 100%;
+	overflow-y: auto;
+}
+
+.html_header_title {
+	color: white;
+	padding: 0px 36px;
+	font: 36px/96px "Microsoft YaHei";
+	text-decoration: none;
+}
+
+.html_header_search {
+	height: 48px;
+	float: right;
+	padding: 0px 6px; 
+	margin: 24px 180px;
+}
+
+.html_header_search_input {
+	float: left;
+	width: 320px;
+	height: 36px;
+	margin: 6px 0px;
+	padding: 0px 6px;
+	background: #FFFFFF;
+	border: none;
+	color: black;
+	font: 16px "Microsoft YaHei";
+}
+
+.html_header_search_input:focus {
+	outline:none;
+}
+
+.html_header_search_search {
+	float: left;
+	width: auto;
+	height: 36px;
+	padding: 0px 6px 0px 0px;
+	margin: 6px 0px;
+	background: white;
+}
+
+.html_header_search_search img {
+	width: 24px;
+	height: 24px;
+	margin: 6px 0px;
+}
